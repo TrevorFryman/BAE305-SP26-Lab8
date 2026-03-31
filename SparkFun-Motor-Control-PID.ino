@@ -1,7 +1,7 @@
 
 #include <PID_v2.h> // Include added library to code
 
-// Declare variables
+// Declare variables, allows for manual input as the robot is running 
 double setpoint = 15.0;
 double Kp = 7;
 double Ki = 3;
@@ -63,7 +63,7 @@ void setup()
 void loop()
 {
   int x; //establish "x" as an integer
-
+// tells when the ultrasonic sensor should calculate the distance for use in the PID
   digitalWrite(trigPin, LOW); //pin 6 voltage off
   delayMicroseconds(2); //wait 2 microseconds
   digitalWrite(trigPin, HIGH); //pin 6 voltage on
@@ -76,9 +76,9 @@ void loop()
   
   // Run PID after obtaining the distance
   myPID.Compute();
-  // Print out variables established
-  measurement = D;
-  Serial.print(setpoint);
+  // Print out variables established, this will allow you to see how long it takes the PID
+  measurement = D;                    // to stabalize inturn giving you information on what
+  Serial.print(setpoint);             // variables you need to adjust.
   Serial.print(", ");
   Serial.print(measurement);
   Serial.print(", ");
@@ -92,7 +92,7 @@ void loop()
   Serial.print(", ");
   
   x = (map(output, 0, 255, -255, 255)); // change the PID min and max values to the motors min and max values
-  Serial.println(x);
+  Serial.println(x);                    // This will in turn change the speed at which the robot moves
 
 
     rightMotor(x);
